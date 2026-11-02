@@ -58,7 +58,7 @@ It's inspired by [EhViewer](https://github.com/xiaojieonly/Ehviewer_CN_SXJ), the
 2. Open the Userscripts app once and choose a folder for your scripts.
 3. Go to **Settings → Apps → Safari → Extensions → Userscripts**. Turn it on and allow it on **e-hentai.org**, **forums.e-hentai.org** and **exhentai.org**.
 4. In Safari, open this link and tap **Install** when Userscripts offers it:
-   **https://raw.githubusercontent.com/caaaw/eh-reader/main/eh-reader-IOS.js**
+   **https://raw.githubusercontent.com/caaaw/eh-reader-IOS/main/eh-reader-IOS.js**
 5. Visit [e-hentai.org](https://e-hentai.org). The mobile layout should appear.
 
 If the install prompt doesn't appear, download `eh-reader.user.js` from this repository and save it into the Userscripts folder you chose in step 2. Use the Files app or iCloud Drive.
