@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         EH Reader
 // @namespace    eh-reader
-// @version      0.13.1
+// @version      0.13.2
 // @description  A mobile-friendly E-Hentai / ExHentai for iPhone and iPad Safari: gallery lists, search filters, saved searches, a full-screen reader, favorites, My Tags and History.
 // @author       caaaw
 // @license      MIT
@@ -21,7 +21,7 @@
 (() => {
   'use strict';
 
-  const VERSION = '0.13.1';  // keep in sync with @version; shown under the Read button and in the menu
+  const VERSION = '0.13.2';  // keep in sync with @version; shown under the Read button and in the menu
   const CONCURRENCY = 3;  // simultaneous image-page fetches; the site rate-limits aggressive clients
   const PRELOAD = 4;      // pages resolved ahead of the current one
   const MAX_RETRIES = 2;  // retries via the site's alternate-server ("nl") key
@@ -926,10 +926,13 @@
           meta && h('span', { class: 'ehm-muted ehm-date' }, new Date(meta.posted * 1000).toLocaleDateString()))));
   }
 
-  // Calls fn when el comes within ~2 screens of view, and again after each call while it still is.
+  // Calls fn when el comes within NEAR_PX below the screen, and again after each call while it
+  // still is. The observer and the check share one distance: when they disagreed, the observer
+  // fired once, the check said "not yet", and nothing fired again. Scrolling re-checks as a backup.
+  const NEAR_PX = 1500;
   function whenNear(el, fn) {
-    const near = () => el.getBoundingClientRect().top < window.innerHeight * 2.5;
-    let busy = false;
+    const near = () => el.isConnected && el.getBoundingClientRect().top < window.innerHeight + NEAR_PX;
+    let busy = false, queued = false;
     const run = async () => {
       if (busy || !near()) return;
       busy = true;
@@ -938,7 +941,14 @@
       if (more) run();
     };
     new IntersectionObserver(entries => { if (entries.some(e => e.isIntersecting)) run(); },
-      { rootMargin: '1500px 0px' }).observe(el);
+      { rootMargin: `${NEAR_PX}px 0px` }).observe(el);
+    const check = () => {
+      if (queued) return;
+      queued = true;
+      setTimeout(() => { queued = false; run(); }, 100);
+    };
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check);
     run();
   }
 
