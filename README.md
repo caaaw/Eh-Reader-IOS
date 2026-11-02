@@ -61,7 +61,7 @@ It's inspired by [EhViewer](https://github.com/xiaojieonly/Ehviewer_CN_SXJ), the
    **https://raw.githubusercontent.com/caaaw/eh-reader-IOS/main/eh-reader-IOS.js**
 5. Visit [e-hentai.org](https://e-hentai.org). The mobile layout should appear.
 
-If the install prompt doesn't appear, download `eh-reader.user.js` from this repository and save it into the Userscripts folder you chose in step 2. Use the Files app or iCloud Drive.
+If the install prompt doesn't appear, download `eh-reader-IOS.js` from this repository and save it into the Userscripts folder you chose in step 2. Use the Files app or iCloud Drive.
 
 ### Desktop (Chrome, Edge, Firefox)
 1. Install **Tampermonkey** or **Violentmonkey**. In Chrome and Edge, Tampermonkey needs **Allow user scripts** turned on in its extension details.
